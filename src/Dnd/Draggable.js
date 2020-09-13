@@ -13,10 +13,12 @@ export default  class  Draggable extends React.Component {
         //localStorage.setItem('objtest',obj);
 
         console.log('dorp2'+  e.dataTransfer.setData('transfer',e.target.id));
+        
     }
     noAllowDrop = (e) => {
 
         e.stopPropagation();
+        e.dataTransfer.clearData();
     }
 
     sayHello() {
@@ -26,7 +28,7 @@ export default  class  Draggable extends React.Component {
     render() {
 
         return(
-            <div id={this.props.id} draggable="true" onDragStart={this.drag} onDragOver={this.noAllowDrop} style={this.props.style}>
+            <div id={this.props.id} draggable="true" onDragStart={(e) => this.drag(e)} ondragend={this.dragend_handler} /* onDragOver={this.noAllowDrop} */ style={this.props.style}>
                 {this.props.children}
 
 
