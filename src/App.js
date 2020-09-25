@@ -1,4 +1,5 @@
 import React from 'react';
+
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -22,6 +23,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 
 import MouseOverPopover from "./Dnd/Popovers/PopoverInputText";
 import ListeMoney from "./Dnd/Items/listeMoney";
+
 
 const drawerWidth = 240;
 
@@ -96,7 +98,11 @@ const Item =  {
   height: '100%'
 }
 
-
+const stylebutton ={
+  height: 48,
+  padding: '0 30px',
+  margin: 8,
+}
 
 
 
@@ -123,13 +129,25 @@ class TestShow extends React.Component {
       );
     });
   }
-  setData() {
-    let obj = {name:'jon'}
-    localStorage.setItem('myData',JSON.stringify(obj));
-    // this line brings to me how much item my grid contains
 
+
+
+
+
+
+  onSave() {
+
+    }
+
+
+  onOpen() {
 
   }
+  onPrint() {}
+      
+  
+
+
   getData (){
     let data =  localStorage.getItem('myData');
     let data2 =  localStorage.getItem('myData2');
@@ -142,20 +160,30 @@ class TestShow extends React.Component {
 
   render() {
     return (
+
         <div>
           <div>
 
-            <Button onClick={()=> this.setData()}>save</Button>
-            <Button onClick={()=> this.getData()}>get</Button>
+            <Button onClick={this.onSave} style ={stylebutton}>save pdf </Button>
+            <Button onClick={this.onOpen} style ={stylebutton} >open pdf </Button>
+            <Button onClick={this.onPrint} style ={stylebutton}>print pdf </Button>
+
+
+
+            <Button onClick={()=> this.getData()}style ={stylebutton} >save local storage</Button>
 
 
           </div>
-          <ShowcaseLayout onLayoutChange={this.onLayoutChange} />
+          <div>
+
+            <br></br>
+          </div>
+          <div >  <ShowcaseLayout onLayoutChange={this.onLayoutChange}  /></div>
+
         </div>
     );
   }
 }
-
 
 export default function MiniDrawer() {
 

@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+
 import _ from "lodash";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import Droppable from "./Droppable";
@@ -25,154 +25,198 @@ const droppableStyle1 = {
 }
 
 export default class ShowcaseLayout extends React.Component {
+  static defaultProps = {
+    className: "layout",
+    cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+    rowHeight: 100
+  };
 
   constructor(props) {
-    super(props);
+    super();
+
     this.state = {
-      currentBreakpoint: "lg",
-      compactType: "vertical",
-      mounted: false,
-      layouts: { lg: props.initialLayout }
+      items: [0, 1, 2, 3].map(function(i, key, list) {
+        return {
+          i: i.toString(),
+          x: i * 2,
+          y: 0,
+          w: 2,
+          h: 2,
+          add: i === (list.length - 1)
+        };
+      }),
+      newCounter: 4,
+      layouts: []
     };
 
-
+    this.onAddItem = this.onAddItem.bind(this);
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
-    this.onCompactTypeChange = this.onCompactTypeChange.bind(this);
-    this.onLayoutChange = this.onLayoutChange.bind(this);
-    this.onNewLayout = this.onNewLayout.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({ mounted: true });
-    console.log('ines compnent did mount' +   this.setState());
+  componentWillMount () {
+    
   }
 
-  generateDOM() {
+  UNSAFE_componentWillUpdate = (nextprops, nextState)  => {
 
-    console.log('hello ');
-    return _.map(this.state.layouts.lg, function(l, i) {
+    if(this.state.items!==nextState.items){
+      //this.renameKey(this.state.items);
+      this.state.items.forEach(element => {
+  
+        this.setState({ layouts : [...this.state.layouts, this.deleteElementObj(element, 'i' , 'w', 'h' , 'add') ]});
+      });
 
-      return (
-
-
-
-      <div key={i}  ref ={i+'grid'}className={l.static ? "static" : ""}>
-        {l.static ? (
-            <span
-                className="text"
-                title="This item is static and cannot be removed or resized."
-            >
-
-            </span>
-        ) : (
-            <Droppable id={i} ref ={i+'item'} style={droppableStyle1} fluid>
+    }
 
 
-
-            </Droppable>
-        )}
-        
-      </div>
-
-
-
-
-      );
-
-    });
+    console.log('layouts ; '+JSON.stringify(nextState.layouts));
   }
 
+  clone = (obj) => Object.assign({}, obj);
 
-  onBreakpointChange(breakpoint) {
+  renameKey = (object, i, h , w , add) => {
+
+    const clonedObj = this.clone(object);
+  
+   // const targetKey = clonedObj[key];
+  
+  
+  
+    delete clonedObj[i];
+    delete clonedObj[h];
+    delete clonedObj[w];
+    delete clonedObj[add];
+  
+    //clonedObj[newKey] = targetKey;
+  
+    return clonedObj;
+  
+  };
+
+  deleteElementObj = (object, key ) => {
+
+    const clonedObj = this.clone(object);
+  
+    //const targetKey = clonedObj[key];
+  
+  
+  
+    delete clonedObj[key];
+  
+   //clonedObj[newKey] = targetKey;
+  
+    return clonedObj;
+  
+  };
+
+  createElement(el) {
+    const removeStyle = {
+      position: "absolute",
+      right: "2px",
+      top: 0,
+      cursor: "pointer"
+    };
+    
+
+    const i = el.add ? "+" : el.i;
+    return (
+        <div key={i} data-grid={el}>
+
+          <Droppable id={i} ref ={i+'item'} style={droppableStyle1} fluid>
+
+
+
+          </Droppable>
+
+          <span
+              className="remove"
+              style={removeStyle}
+              onClick={this.onRemoveItem.bind(this, i)}
+          >
+          x
+        </span>
+        </div>
+    );
+  }
+
+  onAddItem() {
+
+    console.log("adding",  this.state.newCounter);
+    if( this.state.items.length < 12){
+      this.setState({
+        // Add a new item. It must have a unique key!
+        items: this.state.items.concat({
+          i: "n" + this.state.newCounter,
+          x: (this.state.items.length * 2) % (this.state.cols || 12),
+          y: Infinity, // puts it at the bottom
+          w: 2,
+          h: 2
+        }),
+        // Increment the counter to ensure key is always unique.
+        newCounter: this.state.newCounter + 1
+      });
+
+      this.setState({ layouts : [...this.state.layouts,Object.assign({},{x: (this.state.items.length * 2) % (this.state.cols || 12), y: Infinity})]})
+
+    }
+
+
+    console.log('ines : '+JSON.stringify(this.state.layouts));
+  }
+
+  // We're using the cols coming back from this to calculate where to add new items.
+  onBreakpointChange(breakpoint, cols) {
     this.setState({
-      currentBreakpoint: breakpoint
+      breakpoint: breakpoint,
+      cols: cols
     });
   }
 
-  onCompactTypeChange() {
-    const { compactType: oldCompactType } = this.state;
-    const compactType =
-        oldCompactType === "horizontal"
-            ? "vertical"
-            : oldCompactType === "vertical"
-            ? null
-            : "horizontal";
-    this.setState({ compactType });
+  onLayoutChange(layout) {
+    this.props.onLayoutChange(layout);
+    this.setState({ layout: layout });
+
   }
 
-  onLayoutChange(layout, layouts) {
-    this.props.onLayoutChange(layout, layouts);
-  }
-
-  onNewLayout() {
-    this.setState({
-      layouts: { lg: generateLayout() }
-    });
+  onRemoveItem(i) {
+    console.log("removing", i);
+    this.setState({ items: _.reject(this.state.items, { i: i }), newCounter: i });
   }
 
 
   render() {
 
-    console.log('hello 5');
-    console.log(this.generateDOM());
-
-
-
-
-
     return (
+        <div >
+          <button onClick={this.onAddItem}>Add Item</button>
+
+          <div id={"divToPrint"}>
+
+            <br></br>
+            <ResponsiveReactGridLayout
+
+                cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                rowHeight={30}
+
+                onLayoutChange={this.onLayoutChange}
+                onBreakpointChange={this.onBreakpointChange}
+                {...this.props}
+
+                >
 
 
-    <div>
+              {_.map(this.state.items, el => this.createElement(el))}
 
 
 
-          <ResponsiveReactGridLayout
-              {...this.props}
-              layouts={this.state.layouts}
+            </ResponsiveReactGridLayout>
+          </div>
 
-              onLayoutChange={this.onLayoutChange}
 
-              measureBeforeMount={false}
-
-              useCSSTransforms={this.state.mounted}
-              compactType={this.state.compactType}
-              preventCollision={!this.state.compactType}
-          >
-
-            {this.generateDOM()
-            }
-
-          </ResponsiveReactGridLayout>
-        </div>
-
+         </div>
     );
+
   }
 
-}
 
-ShowcaseLayout.propTypes = {
-  onLayoutChange: PropTypes.func.isRequired
-};
-
-ShowcaseLayout.defaultProps = {
-  className: "layout",
-  rowHeight: 30,
-  onLayoutChange: function() {},
-  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-  initialLayout: generateLayout()
-};
-
-function generateLayout() {
-  return _.map(_.range(0, 12), function(item, i) {
-    var y = Math.ceil(Math.random() * 4) + 1;
-    return {
-      x: (_.random(0, 5) * 2) % 12,
-      y: Math.floor(i / 6) * y,
-      w: 2,
-      h: y,
-      i: i.toString(),
-      //static: Math.random() < 0.05
-    };
-  });
 }

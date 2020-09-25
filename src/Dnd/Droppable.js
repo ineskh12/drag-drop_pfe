@@ -50,7 +50,7 @@ export default class Droppable extends React.Component {
           };
 
         console.log('from droppable' + data);
-        console.log('from droppable' + data2);
+        //console.log('from droppable' + data2);
         console.log('drop36' + data[1])
 
 
@@ -73,7 +73,7 @@ export default class Droppable extends React.Component {
 
 
 
-                { console.log('ines style' + this.props.style)}
+
 
 
 
