@@ -117,6 +117,7 @@ class TestShow extends React.Component {
 
   onLayoutChange(layout) {
     this.setState({ layout: layout });
+    
   }
 
   stringifyLayout() {
@@ -159,6 +160,7 @@ class TestShow extends React.Component {
   }
 
   render() {
+  
     return (
 
         <div>
@@ -202,6 +204,7 @@ export default function MiniDrawer() {
   };
 
   return (
+    
       <div className={classes.root}>
         <CssBaseline />
         <AppBar

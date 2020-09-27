@@ -28,6 +28,7 @@ export default class ShowcaseLayout extends React.Component {
   static defaultProps = {
     className: "layout",
     cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+    rows: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
     rowHeight: 100
   };
 
@@ -46,25 +47,35 @@ export default class ShowcaseLayout extends React.Component {
         };
       }),
       newCounter: 4,
-      layouts: []
+      
+      layouts: [],
     };
-
+    
     this.onAddItem = this.onAddItem.bind(this);
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
   }
 
   componentWillMount () {
+    let List= [];
+        
+    this.state.items.forEach(element => {
+      let obj = Object.assign( {},{absolutePosition : {x:element.x * 100 ,y : element.y }});
+      console.log('obj : '+obj);
+      List.push(obj);
+    });
+    this.setState({ layouts :  List });
     
+    console.log(this.state.items);
   }
 
   UNSAFE_componentWillUpdate = (nextprops, nextState)  => {
-
+    //this.state.layouts =[this.state.items] 
     if(this.state.items!==nextState.items){
       //this.renameKey(this.state.items);
-      this.state.items.forEach(element => {
-  
-        this.setState({ layouts : [...this.state.layouts, this.deleteElementObj(element, 'i' , 'w', 'h' , 'add') ]});
-      });
+      /* this.state.items.forEach(element => {
+        let obj = Object.assign({}, {absolutePosition : {x:element.x ,y : element.y }});
+        this.setState({ layouts : [...this.state.layouts, obj ]});
+      }); */
 
     }
 
@@ -148,7 +159,7 @@ export default class ShowcaseLayout extends React.Component {
         items: this.state.items.concat({
           i: "n" + this.state.newCounter,
           x: (this.state.items.length * 2) % (this.state.cols || 12),
-          y: Infinity, // puts it at the bottom
+          y: 0, // puts it at the bottom
           w: 2,
           h: 2
         }),
@@ -156,25 +167,27 @@ export default class ShowcaseLayout extends React.Component {
         newCounter: this.state.newCounter + 1
       });
 
-      this.setState({ layouts : [...this.state.layouts,Object.assign({},{x: (this.state.items.length * 2) % (this.state.cols || 12), y: Infinity})]})
+      this.setState({ layouts : [...this.state.layouts,Object.assign({},{absolutePosition:{x: (this.state.items.length * 2) % (this.state.cols || 12), y: 0}})]})
 
     }
 
 
-    console.log('ines : '+JSON.stringify(this.state.layouts));
+    console.log('ines : '+JSON.stringify(this.state.items));
   }
 
   // We're using the cols coming back from this to calculate where to add new items.
-  onBreakpointChange(breakpoint, cols) {
+  onBreakpointChange(breakpoint, cols,rows) {
     this.setState({
       breakpoint: breakpoint,
-      cols: cols
+      cols: cols,
+      rows: rows
     });
   }
 
   onLayoutChange(layout) {
     this.props.onLayoutChange(layout);
-    this.setState({ layout: layout });
+    this.setState({ layout: layout },{ layout: layout });
+   
 
   }
 
@@ -185,7 +198,7 @@ export default class ShowcaseLayout extends React.Component {
 
 
   render() {
-
+    //console.log('ines app : '+ JSON.stringify(this.state.items) );
     return (
         <div >
           <button onClick={this.onAddItem}>Add Item</button>
@@ -196,6 +209,7 @@ export default class ShowcaseLayout extends React.Component {
             <ResponsiveReactGridLayout
 
                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                rows={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                 rowHeight={30}
 
                 onLayoutChange={this.onLayoutChange}
