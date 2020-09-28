@@ -21,10 +21,6 @@ export default  class  Draggable extends React.Component {
         e.dataTransfer.clearData();
     }
 
-    sayHello() {
-
-        alert('Hello ines!');
-    }
     render() {
 
         return(

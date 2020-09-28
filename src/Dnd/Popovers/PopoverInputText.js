@@ -3,6 +3,8 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {PostAdd} from "@material-ui/icons";
+//import DragItemOnclick from "../Items/DragItemOnclick";
+//import Draggable from "../Draggable";
 const useStyles = makeStyles((theme) => ({
     popover: {
         pointerEvents: 'none',
@@ -12,7 +14,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function MouseOverPopover() {
+   /*  const Item =  {
+        color: '#55',
+        backgroundColor: 'white',
+        borderRadius: '3px',
+        height: '100%'
+      } */
+      
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -20,23 +30,33 @@ export default function MouseOverPopover() {
         setAnchorEl(event.currentTarget);
     };
 
+    
+   
     const handlePopoverClose = () => {
         setAnchorEl(null);
     };
 
     const open = Boolean(anchorEl);
-
+   
     return (
-        <div>
+        
+   
+
+        <div   >
             <Typography
                 aria-owns={open ? 'mouse-over-popover' : undefined}
                 aria-haspopup="true"
                 onMouseEnter={handlePopoverOpen}
                 onMouseLeave={handlePopoverClose}
+               // onClick={onSave}
+               
+
             >
-                <PostAdd >  </PostAdd>
+        
+                <PostAdd > </PostAdd>
             </Typography>
             <Popover
+         
                 id="mouse-over-popover"
                 className={classes.popover}
                 classes={{
@@ -55,7 +75,7 @@ export default function MouseOverPopover() {
                 onClose={handlePopoverClose}
                 disableRestoreFocus
             >
-                <Typography>Input text.</Typography>
+                <Typography>Input text.  </Typography>
             </Popover>
         </div>
     );

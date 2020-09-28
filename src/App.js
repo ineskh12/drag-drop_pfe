@@ -95,7 +95,8 @@ const Item =  {
   color: '#55',
   backgroundColor: 'white',
   borderRadius: '3px',
-  height: '100%'
+  height: '100%',
+  style :'width:auto'
 }
 
 const stylebutton ={
@@ -103,40 +104,61 @@ const stylebutton ={
   padding: '0 30px',
   margin: 8,
 }
-
-
+/* 
+const spanStyles = {
+  color: "#fff",
+  borderColor: "#00f"
+}; */
+/* 
+const Button1 = props => (
+  
+  <button style={{
+    color: "#fff",
+    borderColor: "#00f"
+    
+  }}>
+  
+    <span style={spanStyles}>Button Name</span>
+  </button>
+  
+); */
 
 class TestShow extends React.Component {
-
+  state = { layout: [] };
   constructor(props) {
     super(props);
     this.state = { layout: [] };
+        
     this.onLayoutChange = this.onLayoutChange.bind(this)
 
   }
-
+  
   onLayoutChange(layout) {
     this.setState({ layout: layout });
     
   }
 
+
+  
+
   stringifyLayout() {
+
     return this.state.layout.map(function(l) {
+      const name = l.i === "__dropping-elem__" ? "drop" : l.i;
+  
       return (
-          <div className="layoutItem" key={l.i}>
-            <b>{l.i}</b>: [{l.x}, {l.y}, {l.w}, {l.h}]
 
-          </div>
+        <div className="layoutItem" key={l.i}>
+          <b>{name}</b>
+          {`: [${l.x}, ${l.y}, ${l.w}, ${l.h}]`}
+        </div>
       );
+
+     
     });
+    
   }
-
-
-
-
-
-
-  onSave() {
+ /*  onSave() {
 
     }
 
@@ -158,7 +180,7 @@ class TestShow extends React.Component {
     console.log('jj '+data2);
 
   }
-
+ *//* 
   render() {
   
     return (
@@ -166,16 +188,16 @@ class TestShow extends React.Component {
         <div>
           <div>
 
-            <Button onClick={this.onSave} style ={stylebutton}>save pdf </Button>
+            /* <Button onClick={this.onSave} style ={stylebutton}>save pdf </Button>
             <Button onClick={this.onOpen} style ={stylebutton} >open pdf </Button>
             <Button onClick={this.onPrint} style ={stylebutton}>print pdf </Button>
 
 
 
             <Button onClick={()=> this.getData()}style ={stylebutton} >save local storage</Button>
+ */
 
-
-          </div>
+        /*   </div>
           <div>
 
             <br></br>
@@ -186,7 +208,23 @@ class TestShow extends React.Component {
     );
   }
 }
-
+ */
+ 
+render() {
+  
+ 
+  return (
+    
+    <div>
+      <div className="layoutJSON">
+        Displayed as <code>[x, y, w, h]</code>:
+        <div className="columns">{this.stringifyLayout()}</div>
+      </div>
+      <ShowcaseLayout onLayoutChange={this.onLayoutChange} />
+    </div>
+  );
+}
+}
 export default function MiniDrawer() {
 
 
@@ -265,7 +303,7 @@ export default function MiniDrawer() {
 
                 <MouseOverPopover/>
               </ListItemIcon>
-
+      
               <Droppable id="dr1"  color="inherit"
                          aria-label="open drawer"
                          onClick={handleDrawerOpen}
@@ -275,7 +313,7 @@ export default function MiniDrawer() {
                          })}>
 
 
-                <Draggable id="item3" style={ {margin:  '8px'}}><div style={Item}> <input type="text" name="name" /> </div></Draggable>
+                <Draggable id="item3" style={ {margin:  '8px'}}><div style={Item}> <input type="text" name="name"  /> </div></Draggable>
                 <Draggable id="item4" style={ {margin:  '8px'}}><div style={Item}> <ListeMoney/></div></Draggable>
 
 
