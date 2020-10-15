@@ -6,7 +6,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import {PostAdd} from "@material-ui/icons";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-function MyVerticallyCenteredModal(props) {
+const MyVerticallyCenteredModal=(props) => {
     return (
         <Modal
             {...props}
@@ -59,5 +59,5 @@ function ModalInputText()  {
         </>
     );
 }
-export default ModalInputText
+export default ModalInputText;
 

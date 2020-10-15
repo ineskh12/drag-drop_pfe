@@ -6,17 +6,10 @@ export default class Droppable extends React.Component {
 
     dragstart_handler(id, e) {
         console.log("dragStart");
-
-        // Change the source element's background color to signify drag has started
-        //e.currentTarget.style.border = "dashed";
-        // Add the id of the drag source element to the drag data payload so
-        // it is available when the drop event is fired
-        e.dataTransfer.setData("transfer", e.target.id);
+       e.dataTransfer.setData("transfer", e.target.id);
         console.log('SUM : ' + e.target.id);
         console.log('drag start' + e.dataTransfer.getData("transfer"));
-        // Tell the browser both copy and move are possible
-        //ev.effectAllowed = "copyMove";
-        e.dataTransfer.setData("gridId", id);
+         e.dataTransfer.setData("gridId", id);
     }
 
 

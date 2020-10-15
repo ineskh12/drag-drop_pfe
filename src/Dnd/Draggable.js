@@ -5,17 +5,14 @@ export default  class  Draggable extends React.Component {
 
 
 
-    drag= (e) =>{
+      drag= (e) =>{
 
         e.dataTransfer.setData('transfer',e.target.id);
-     //let obj=   e.dataTransfer.setData('transfer',e.target.style);
         localStorage.setItem('myData',e.target.id);
-        //localStorage.setItem('objtest',obj);
-
-        console.log('dorp2'+  e.dataTransfer.setData('transfer',e.target.id));
+         console.log('dorp2'+  e.dataTransfer.setData('transfer',e.target.id));
         
     }
-    noAllowDrop = (e) => {
+      noAllowDrop = (e) => {
 
         e.stopPropagation();
         e.dataTransfer.clearData();

@@ -15,15 +15,16 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ModalInputText from "./Dnd/Modal/ModalInputText";
-import Button from 'react-bootstrap/Button'
-import ShowcaseLayout from "./Dnd/ShowcaseLayout";
+
+import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
 import Droppable from "./Dnd/Droppable";
-import Draggable from "./Dnd/Draggable";
+
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-import MouseOverPopover from "./Dnd/Popovers/PopoverInputText";
-import ListeMoney from "./Dnd/Items/listeMoney";
-
+import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
+import Daggableitems from "./Dnd/Daggableitems"
+import TestShow from "./Dnd/TestShow";
+import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined';
 
 const drawerWidth = 240;
 
@@ -91,19 +92,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const Item =  {
-  color: '#55',
-  backgroundColor: 'white',
-  borderRadius: '3px',
-  height: '100%',
-  style :'width:auto'
-}
-
+/* 
 const stylebutton ={
   height: 48,
   padding: '0 30px',
   margin: 8,
-}
+} */
 /* 
 const spanStyles = {
   color: "#fff",
@@ -123,109 +117,9 @@ const Button1 = props => (
   
 ); */
 
-class TestShow extends React.Component {
-  state = { layout: [] };
-  constructor(props) {
-    super(props);
-    this.state = { layout: [] };
-        
-    this.onLayoutChange = this.onLayoutChange.bind(this)
 
-  }
-  
-  onLayoutChange(layout) {
-    this.setState({ layout: layout });
-    
-  }
+const  App = () => {
 
-
-  
-
-  stringifyLayout() {
-
-    return this.state.layout.map(function(l) {
-      const name = l.i === "__dropping-elem__" ? "drop" : l.i;
-  
-      return (
-
-        <div className="layoutItem" key={l.i}>
-          <b>{name}</b>
-          {`: [${l.x}, ${l.y}, ${l.w}, ${l.h}]`}
-        </div>
-      );
-
-     
-    });
-    
-  }
- /*  onSave() {
-
-    }
-
-
-  onOpen() {
-
-  }
-  onPrint() {}
-      
-  
-
-
-  getData (){
-    let data =  localStorage.getItem('myData');
-    let data2 =  localStorage.getItem('myData2');
-    data =JSON.parse(data);
-
-    console.log(data.name);
-    console.log('jj '+data2);
-
-  }
- *//* 
-  render() {
-  
-    return (
-
-        <div>
-          <div>
-
-            /* <Button onClick={this.onSave} style ={stylebutton}>save pdf </Button>
-            <Button onClick={this.onOpen} style ={stylebutton} >open pdf </Button>
-            <Button onClick={this.onPrint} style ={stylebutton}>print pdf </Button>
-
-
-
-            <Button onClick={()=> this.getData()}style ={stylebutton} >save local storage</Button>
- */
-
-        /*   </div>
-          <div>
-
-            <br></br>
-          </div>
-          <div >  <ShowcaseLayout onLayoutChange={this.onLayoutChange}  /></div>
-
-        </div>
-    );
-  }
-}
- */
- 
-render() {
-  
- 
-  return (
-    
-    <div>
-      <div className="layoutJSON">
-        Displayed as <code>[x, y, w, h]</code>:
-        <div className="columns">{this.stringifyLayout()}</div>
-      </div>
-      <ShowcaseLayout onLayoutChange={this.onLayoutChange} />
-    </div>
-  );
-}
-}
-export default function MiniDrawer() {
 
 
   const classes = useStyles();
@@ -240,6 +134,7 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
 
   return (
     
@@ -300,8 +195,20 @@ export default function MiniDrawer() {
 
             <ListItem >
               <ListItemIcon>
+              <ImageOutlinedIcon
+              size={48}
+              strokeWidth={2}
+              color={'black'}
+              />
+  
+              <TableChartOutlinedIcon
+              size={48}
+              strokeWidth={2}
+              color={'black'}
+            /> 
+            <TextFieldsOutlinedIcon/>
 
-                <MouseOverPopover/>
+            
               </ListItemIcon>
       
               <Droppable id="dr1"  color="inherit"
@@ -312,10 +219,7 @@ export default function MiniDrawer() {
                            [classes.hide]: open,
                          })}>
 
-
-                <Draggable id="item3" style={ {margin:  '8px'}}><div style={Item}> <input type="text" name="name"  /> </div></Draggable>
-                <Draggable id="item4" style={ {margin:  '8px'}}><div style={Item}> <ListeMoney/></div></Draggable>
-
+<Daggableitems/>
 
               </Droppable>
 
@@ -335,3 +239,5 @@ export default function MiniDrawer() {
       </div>
   );
 }
+
+export default  App;

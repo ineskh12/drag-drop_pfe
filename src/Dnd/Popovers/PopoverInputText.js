@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function MouseOverPopover() {
+const MouseOverPopover=() =>{
    /*  const Item =  {
         color: '#55',
         backgroundColor: 'white',
@@ -80,3 +80,4 @@ export default function MouseOverPopover() {
         </div>
     );
 }
+export default  MouseOverPopover;

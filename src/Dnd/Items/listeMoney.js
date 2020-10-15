@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ListeMoney() {
+const ListeMoney = () => {
     const classes = useStyles();
     const [currency, setCurrency] = React.useState('EUR');
 // state handle event
@@ -66,3 +66,4 @@ export default function ListeMoney() {
         </form>
     );
 }
+export default  ListeMoney;
