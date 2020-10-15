@@ -16,12 +16,10 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ModalInputText from "./Dnd/Modal/ModalInputText";
 
-import TableChartOutlinedIcon from '@material-ui/icons/TableChartOutlined';
 import Droppable from "./Dnd/Droppable";
 
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
 import Daggableitems from "./Dnd/Daggableitems"
 import TestShow from "./Dnd/TestShow";
 import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined';
@@ -195,17 +193,7 @@ const  App = () => {
 
             <ListItem >
               <ListItemIcon>
-              <ImageOutlinedIcon
-              size={48}
-              strokeWidth={2}
-              color={'black'}
-              />
-  
-              <TableChartOutlinedIcon
-              size={48}
-              strokeWidth={2}
-              color={'black'}
-            /> 
+             
             <TextFieldsOutlinedIcon/>
 
             

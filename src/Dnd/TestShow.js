@@ -1,3 +1,4 @@
+
 import React from 'react';
 import ShowcaseLayout from "./ShowcaseLayout";
 
@@ -6,11 +7,34 @@ export default class TestShow extends React.Component {
   //state = { layout: [] };
   constructor(props) {
     super(props);
-    this.state = { layout: [] };
     this.onLayoutChange = this.onLayoutChange.bind(this)
+    this.state = {isToggleOn: true};
+    this.state = { layout: [],layouts: []   };
+   
+    this.handleClick = this.handleClick.bind(this);
+    
+  
 
   }
   
+  handleClick() {
+    let List= [];
+        
+    this.state.layout.forEach(element => {
+      let obj = Object.assign( {},{absolutePosition : {x:element.x  ,y : element.y }});
+      console.log(obj);
+      List.push(obj);
+    });
+   
+    
+   // console.log(this.state.items);
+    this.setState(state => ({isToggleOn: !state.isToggleOn
+    }));
+    this.setState({ layouts : [...this.state.layouts,List]})
+
+    console.log('handleClick');
+    console.log(this.state.layouts);
+  }
   onLayoutChange(layout) {
     this.setState({ layout: layout });
     
@@ -18,7 +42,9 @@ export default class TestShow extends React.Component {
 
   
   stringifyLayout() {
-    
+    //console.log('test show')
+    //console.log(this.state.layout)
+  
    return this.state.layout.map(function(l) {
   
    
@@ -35,56 +61,31 @@ export default class TestShow extends React.Component {
      
     });
    
-    
+   
   }
- /*  onSave() {
-    }
-  onOpen() {
-  }
-  onPrint() {}
-      
-  
-  getData (){
-    let data =  localStorage.getItem('myData');
-    let data2 =  localStorage.getItem('myData2');
-    data =JSON.parse(data);
-    console.log(data.name);
-    console.log('jj '+data2);
-  }
- *//* 
-  render() {
-  
-    return (
-        <div>
-          <div>
-            /* <Button onClick={this.onSave} style ={stylebutton}>save pdf </Button>
-            <Button onClick={this.onOpen} style ={stylebutton} >open pdf </Button>
-            <Button onClick={this.onPrint} style ={stylebutton}>print pdf </Button>
-            <Button onClick={()=> this.getData()}style ={stylebutton} >save local storage</Button>
- */
 
-        /*   </div>
-          <div>
-            <br></br>
-          </div>
-          <div >  <ShowcaseLayout onLayoutChange={this.onLayoutChange}  /></div>
-        </div>
-    );
-  }
-}
- */
+
+
+  
+ 
  
 render() {
   
- console.log(this.state.layout)
+ 
   return (
     
     <div>
       <div className="layoutJSON">
+      <button onClick={this.handleClick}>
+      {this.state.isToggleOn ? 'ON' : 'OFF'}
+    </button>
         Displayed as <code>[x, y, w, h]</code>:
         <div className="columns">{this.stringifyLayout()}</div>
+       
+  
       </div>
       <ShowcaseLayout onLayoutChange={this.onLayoutChange} />
+  
     </div>
   );
 }

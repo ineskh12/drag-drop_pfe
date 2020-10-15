@@ -50,75 +50,12 @@ export default class ShowcaseLayout extends React.Component {
       
       layouts: [],
     };
-    
+   
+    //this.state.layouts =this.setState(this.state.layout);
     this.onAddItem = this.onAddItem.bind(this);
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
   }
 
-  componentWillMount () {
-    let List= [];
-        
-    this.state.items.forEach(element => {
-      let obj = Object.assign( {},{absolutePosition : {x:element.x * 100 ,y : element.y }});
-      console.log('obj : '+obj);
-      List.push(obj);
-    });
-    this.setState({ layouts :  List });
-    
-    console.log(this.state.items);
-  }
-
-  UNSAFE_componentWillUpdate = (nextprops, nextState)  => {
-    //this.state.layouts =[this.state.items] 
-    if(this.state.items!==nextState.items){
-      //this.renameKey(this.state.items);
-      /* this.state.items.forEach(element => {
-        let obj = Object.assign({}, {absolutePosition : {x:element.x ,y : element.y }});
-        this.setState({ layouts : [...this.state.layouts, obj ]});
-      }); */
-
-    }
-
-
-    console.log('layouts ; '+JSON.stringify(nextState.layouts));
-  }
-
-  clone = (obj) => Object.assign({}, obj);
-
-  renameKey = (object, i, h , w , add) => {
-
-    const clonedObj = this.clone(object);
-  
-   // const targetKey = clonedObj[key];
-  
-  
-  
-    delete clonedObj[i];
-    delete clonedObj[h];
-    delete clonedObj[w];
-    delete clonedObj[add];
-  
-    //clonedObj[newKey] = targetKey;
-  
-    return clonedObj;
-  
-  };
-
-  deleteElementObj = (object, key ) => {
-
-    const clonedObj = this.clone(object);
-  
-    //const targetKey = clonedObj[key];
-  
-  
-  
-    delete clonedObj[key];
-  
-   //clonedObj[newKey] = targetKey;
-  
-    return clonedObj;
-  
-  };
 
   createElement(el) {
     const removeStyle = {
@@ -186,10 +123,11 @@ export default class ShowcaseLayout extends React.Component {
 
   onLayoutChange(layout) {
     this.props.onLayoutChange(layout);
-    this.setState({ layout: layout },{ layout: layout });
+    this.setState({ layout: layout });
    
 
   }
+  
 
   onRemoveItem(i) {
     console.log("removing", i);
@@ -198,12 +136,13 @@ export default class ShowcaseLayout extends React.Component {
 
 
   render() {
+ 
     //console.log('ines app : '+ JSON.stringify(this.state.items) );
     return (
         <div >
           <button onClick={this.onAddItem}>Add Item</button>
 
-          <div id={"divToPrint"}>
+          <div >
 
             <br></br>
             <ResponsiveReactGridLayout
@@ -211,7 +150,7 @@ export default class ShowcaseLayout extends React.Component {
                 cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                 rows={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                 rowHeight={30}
-
+               
                 onLayoutChange={this.onLayoutChange}
                 onBreakpointChange={this.onBreakpointChange}
                 {...this.props}
