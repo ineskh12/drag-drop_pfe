@@ -1,53 +1,59 @@
 import React from 'react';
-
 import clsx from 'clsx';
+import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
+import TableChart from '@material-ui/icons/TableChart';
+import CheckBox from '@material-ui/icons/CheckBox';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import TestShow from "./Dnd/TestShow";
 import Typography from '@material-ui/core/Typography';
+import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined';
 import Divider from '@material-ui/core/Divider';
+
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
-import ModalInputText from "./Dnd/Modal/ModalInputText";
-
-import Droppable from "./Dnd/Droppable";
-
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-
-import Daggableitems from "./Dnd/Daggableitems"
-import TestShow from "./Dnd/TestShow";
-import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined';
-
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import CropLandscapeIcon from '@material-ui/icons/CropLandscape';
+import Droppable from './Dnd/Droppable';
+import Draggable from './Dnd/Draggable';
 const drawerWidth = 240;
 
+const Item =  {
+  color: '#55',
+  backgroundColor: 'white',
+  borderRadius: '3px',
+ 
 
+  display: 'flex'
+}
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   menuButton: {
-    marginRight: 36,
+    marginRight: theme.spacing(2),
   },
   hide: {
     display: 'none',
@@ -55,177 +61,148 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
-    whiteSpace: 'nowrap',
   },
-  drawerOpen: {
+  drawerPaper: {
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
+  drawerHeader: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
   },
 }));
 
-
-/* 
-const stylebutton ={
-  height: 48,
-  padding: '0 30px',
-  margin: 8,
-} */
-/* 
-const spanStyles = {
-  color: "#fff",
-  borderColor: "#00f"
-}; */
-/* 
-const Button1 = props => (
-  
-  <button style={{
-    color: "#fff",
-    borderColor: "#00f"
-    
-  }}>
-  
-    <span style={spanStyles}>Button Name</span>
-  </button>
-  
-); */
-
-
-const  App = () => {
-
-
-
+export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  //const[drag,setDrag] =React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
 
+  
 
   return (
-    
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-            position="fixed"
-            className={clsx(classes.appBar, {
-              [classes.appBarShift]: open,
-            })}
-        >
-          <Toolbar>
-            <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                className={clsx(classes.menuButton, {
-                  [classes.hide]: open,
-                })}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" noWrap>
-             Create and Export pdf bills
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-            variant="permanent"
-            className={clsx(classes.drawer, {
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            })}
-            classes={{
-              paper: clsx({
-                [classes.drawerOpen]: open,
-                [classes.drawerClose]: !open,
-              }),
-            }}
-        >
-          <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+          Create and Export pdf bills
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <Droppable id="dr1"  color="inherit"
+        aria-label="open drawer"
+        onClick={handleDrawerOpen}
+        edge="start"
+        className={clsx(classes.menuButton, {
+          [classes.hide]: open,
+        })}>
+        <List>
+        
+            <ListItem button >
+              <ListItemIcon   >  <TextFieldsOutlinedIcon /> </ListItemIcon>
+              
+              
 
-            <ListItem button>
-
-              <ModalInputText />
-            </ListItem>
-          </List>
-          <Divider />
-          <List>
-
-
-            <ListItem >
-              <ListItemIcon>
-             
-            <TextFieldsOutlinedIcon/>
-
-            
-              </ListItemIcon>
-      
-              <Droppable id="dr1"  color="inherit"
-                         aria-label="open drawer"
-                         onClick={handleDrawerOpen}
-                         edge="start"
-                         className={clsx(classes.menuButton, {
-                           [classes.hide]: open,
-                         })}>
-
-<Daggableitems/>
-
-              </Droppable>
+              <Draggable id="item3" style={ {margin:  '8px'}}><div style={Item}> <input type="text" name="name" /> </div></Draggable>
+                
 
             </ListItem>
-          </List>
+        
+        </List> 
+        <Divider />
+        <List>
+          {['checkbox', 'Button'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <CheckBox /> : <CropLandscapeIcon/>}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+        {['Image', 'Tableau'].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>{index % 2 === 0 ?  <ImageOutlinedIcon/> :<TableChart /> }</ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
 
-        </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
 
-
-          <div>
-
-<TestShow/>
-          </div>
-        </main>
-      </div>
+        
+			  
+			  
+			 
+      </List>
+      </Droppable>
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+       <div>
+       
+       <TestShow/></div>
+       
+      </main>
+    </div>
   );
 }
-
-export default  App;

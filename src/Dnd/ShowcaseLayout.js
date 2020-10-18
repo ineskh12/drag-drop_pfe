@@ -3,6 +3,7 @@ import React from "react";
 import _ from "lodash";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import Droppable from "./Droppable";
+import { Button } from '@material-ui/core';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -66,7 +67,7 @@ export default class ShowcaseLayout extends React.Component {
     };
     
 
-    const i = el.add ? "+" : el.i;
+    const i = el.add ? "3" : el.i;
     return (
         <div key={i} data-grid={el}>
 
@@ -104,7 +105,7 @@ export default class ShowcaseLayout extends React.Component {
         newCounter: this.state.newCounter + 1
       });
 
-      this.setState({ layouts : [...this.state.layouts,Object.assign({},{absolutePosition:{x: (this.state.items.length * 2) % (this.state.cols || 12), y: 0}})]})
+      this.setState({ layouts : [this.state.layouts,Object.assign({},{absolutePosition:{x: (this.state.items.length * 2) % (this.state.cols || 12), y: 0}})]})
 
     }
 
@@ -140,8 +141,9 @@ export default class ShowcaseLayout extends React.Component {
     //console.log('ines app : '+ JSON.stringify(this.state.items) );
     return (
         <div >
-          <button onClick={this.onAddItem}>Add Item</button>
-
+        <Button onClick={this.onAddItem} variant="contained" color="primary">
+  Add item
+</Button>
           <div >
 
             <br></br>
