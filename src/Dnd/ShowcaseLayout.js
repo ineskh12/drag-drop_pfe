@@ -37,7 +37,7 @@ export default class ShowcaseLayout extends React.Component {
     super();
 
     this.state = {
-      items: [0, 1, 2, 3].map(function(i, key, list) {
+      items: [0, 1, 2, 3].map(function (i, key, list) {
         return {
           i: i.toString(),
           x: i * 2,
@@ -48,10 +48,10 @@ export default class ShowcaseLayout extends React.Component {
         };
       }),
       newCounter: 4,
-      
+
       layouts: [],
     };
-   
+
     //this.state.layouts =this.setState(this.state.layout);
     this.onAddItem = this.onAddItem.bind(this);
     this.onBreakpointChange = this.onBreakpointChange.bind(this);
@@ -65,33 +65,49 @@ export default class ShowcaseLayout extends React.Component {
       top: 0,
       cursor: "pointer"
     };
-    
 
     const i = el.add ? "3" : el.i;
+    //console.log(document.getElementById('' + i));
+
+    //var matches = [];
+    
+    if (document.getElementById('' + i)) {
+      var searchEles = document.getElementById('' + i).children;
+      //console.log(searchEles);
+
+      for (var j = 0; j < searchEles.length; j++) {
+        console.log(i);
+        console.log(searchEles[j].value);
+        //console.log(searchEles);
+        
+      }
+    }
+
+
     return (
-        <div key={i} data-grid={el}>
+      <div key={i} data-grid={el}>
 
-          <Droppable id={i} ref ={i+'item'} style={droppableStyle1} fluid>
+        <Droppable id={i} ref={i + 'item'} style={droppableStyle1} fluid>
 
 
 
-          </Droppable>
+        </Droppable>
 
-          <span
-              className="remove"
-              style={removeStyle}
-              onClick={this.onRemoveItem.bind(this, i)}
-          >
+        <span
+          className="remove"
+          style={removeStyle}
+          onClick={this.onRemoveItem.bind(this, i)}
+        >
           x
         </span>
-        </div>
+      </div>
     );
   }
 
   onAddItem() {
 
-    console.log("adding",  this.state.newCounter);
-    if( this.state.items.length < 12){
+    console.log("adding", this.state.newCounter);
+    if (this.state.items.length < 12) {
       this.setState({
         // Add a new item. It must have a unique key!
         items: this.state.items.concat({
@@ -105,16 +121,16 @@ export default class ShowcaseLayout extends React.Component {
         newCounter: this.state.newCounter + 1
       });
 
-      this.setState({ layouts : [this.state.layouts,Object.assign({},{absolutePosition:{x: (this.state.items.length * 2) % (this.state.cols || 12), y: 0}})]})
+      this.setState({ layouts: [this.state.layouts, Object.assign({}, { absolutePosition: { x: (this.state.items.length * 2) % (this.state.cols || 12), y: 0 } })] })
 
     }
 
 
-    console.log('ines : '+JSON.stringify(this.state.items));
+    console.log('ines : ' + JSON.stringify(this.state.items));
   }
 
   // We're using the cols coming back from this to calculate where to add new items.
-  onBreakpointChange(breakpoint, cols,rows) {
+  onBreakpointChange(breakpoint, cols, rows) {
     this.setState({
       breakpoint: breakpoint,
       cols: cols,
@@ -125,10 +141,10 @@ export default class ShowcaseLayout extends React.Component {
   onLayoutChange(layout) {
     this.props.onLayoutChange(layout);
     this.setState({ layout: layout });
-   
+
 
   }
-  
+
 
   onRemoveItem(i) {
     console.log("removing", i);
@@ -137,38 +153,38 @@ export default class ShowcaseLayout extends React.Component {
 
 
   render() {
- 
+
     //console.log('ines app : '+ JSON.stringify(this.state.items) );
     return (
-        <div >
+      <div >
         <Button onClick={this.onAddItem} variant="contained" color="primary">
-  Add item
+          Add item
 </Button>
-          <div >
+        <div >
 
-            <br></br>
-            <ResponsiveReactGridLayout
+          <br></br>
+          <ResponsiveReactGridLayout
 
-                cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                rows={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-                rowHeight={30}
-               
-                onLayoutChange={this.onLayoutChange}
-                onBreakpointChange={this.onBreakpointChange}
-                {...this.props}
+            cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+            rows={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+            rowHeight={30}
 
-                >
+            onLayoutChange={this.onLayoutChange}
+            onBreakpointChange={this.onBreakpointChange}
+            {...this.props}
 
-
-              {_.map(this.state.items, el => this.createElement(el))}
+          >
 
 
-
-            </ResponsiveReactGridLayout>
-          </div>
+            {_.map(this.state.items, el => this.createElement(el))}
 
 
-         </div>
+
+          </ResponsiveReactGridLayout>
+        </div>
+
+
+      </div>
     );
 
   }

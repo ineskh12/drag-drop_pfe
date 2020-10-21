@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import TestShow from "./Dnd/TestShow";
 import Typography from '@material-ui/core/Typography';
-import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined';
+//import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined';
 import Divider from '@material-ui/core/Divider';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -26,14 +26,14 @@ import Droppable from './Dnd/Droppable';
 import Draggable from './Dnd/Draggable';
 const drawerWidth = 240;
 
-const Item =  {
+/* const Item =  {
   color: '#55',
   backgroundColor: 'white',
   borderRadius: '3px',
- 
+  margin:  '8px',
 
   display: 'flex'
-}
+} */
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -105,6 +105,18 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
+ /*  const drag= (e) =>{
+
+    e.dataTransfer.setData('transfer',e.target.id);
+    localStorage.setItem('myData',e.target.id);
+     console.log('dorp2'+  e.dataTransfer.setData('transfer',e.target.id));
+    
+}
+  const noAllowDrop = (e) => {
+
+    e.stopPropagation();
+    e.dataTransfer.clearData();
+} */
   
 
   return (
@@ -156,13 +168,13 @@ export default function PersistentDrawerLeft() {
         <List>
         
             <ListItem button >
-              <ListItemIcon   >  <TextFieldsOutlinedIcon /> </ListItemIcon>
+              
               
               
 
-              <Draggable id="item3" style={ {margin:  '8px'}}><div style={Item}> <input type="text" name="name" /> </div></Draggable>
+               {/* <input style={Item} id={this.props.id} draggable="true" onDragStart={(e) => drag(e)}onDragOver={this.noAllowDrop} type="text" name="name" />  */}
                 
-
+                <Draggable />
             </ListItem>
         
         </List> 
