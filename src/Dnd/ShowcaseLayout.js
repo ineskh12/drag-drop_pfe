@@ -67,21 +67,6 @@ export default class ShowcaseLayout extends React.Component {
     };
 
     const i = el.add ? "3" : el.i;
-    //console.log(document.getElementById('' + i));
-
-    //var matches = [];
-    
-    if (document.getElementById('' + i)) {
-      var searchEles = document.getElementById('' + i).children;
-      //console.log(searchEles);
-
-      for (var j = 0; j < searchEles.length; j++) {
-        console.log(i);
-        console.log(searchEles[j].value);
-        //console.log(searchEles);
-        
-      }
-    }
 
 
     return (
