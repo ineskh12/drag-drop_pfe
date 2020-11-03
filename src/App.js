@@ -11,7 +11,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import TestShow from "./Dnd/TestShow";
 import Typography from '@material-ui/core/Typography';
-//import TextFieldsOutlinedIcon from '@material-ui/icons/TextFieldsOutlined';
+
 import Divider from '@material-ui/core/Divider';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -26,14 +26,7 @@ import Droppable from './Dnd/Droppable';
 import Draggable from './Dnd/Draggable';
 const drawerWidth = 240;
 
-/* const Item =  {
-  color: '#55',
-  backgroundColor: 'white',
-  borderRadius: '3px',
-  margin:  '8px',
 
-  display: 'flex'
-} */
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -69,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
+    
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
@@ -95,8 +88,7 @@ export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  //const[drag,setDrag] =React.useState(false);
-
+ 
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -105,18 +97,7 @@ export default function PersistentDrawerLeft() {
     setOpen(false);
   };
 
- /*  const drag= (e) =>{
-
-    e.dataTransfer.setData('transfer',e.target.id);
-    localStorage.setItem('myData',e.target.id);
-     console.log('dorp2'+  e.dataTransfer.setData('transfer',e.target.id));
-    
-}
-  const noAllowDrop = (e) => {
-
-    e.stopPropagation();
-    e.dataTransfer.clearData();
-} */
+ 
   
 
   return (
@@ -139,7 +120,8 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-          Create and Export pdf bills
+         
+Créer et exporter des factures en PDF
           </Typography>
         </Toolbar>
       </AppBar>
@@ -171,9 +153,6 @@ export default function PersistentDrawerLeft() {
               
               
               
-
-               {/* <input style={Item} id={this.props.id} draggable="true" onDragStart={(e) => drag(e)}onDragOver={this.noAllowDrop} type="text" name="name" />  */}
-                
                 <Draggable />
             </ListItem>
         

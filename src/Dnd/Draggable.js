@@ -21,7 +21,7 @@ export default class Draggable extends React.Component {
 
         e.dataTransfer.setData('transfer', e.target.id);
         localStorage.setItem('myData', e.target.id);
-        console.log('dorp2' + e.dataTransfer.setData('transfer', e.target.id));
+        
 
     }
     noAllowDrop = (e) => {
@@ -31,7 +31,6 @@ export default class Draggable extends React.Component {
     }
 
     render() {
-        //console.log(this.props)
         return (
             < div style={{ flexDirection: 'row' }}>
                 <div style={{ flexDirection: 'column' }}>
@@ -41,7 +40,7 @@ export default class Draggable extends React.Component {
                 </div>
                 <div style={{ flexDirection: 'column' }}>
                     <ListItemIcon   >  <TextFieldsOutlinedIcon />
-                        <input style={Item} id="item4" draggable="true" onDragStart={(e) => this.drag(e)} onDragOver={this.noAllowDrop} type="number" name="name" />
+                        <input style={Item} id="item4" draggable="true" onDragStart={(e) => this.drag(e)} onDragOver={this.noAllowDrop} type="text" name="name" />
                     </ListItemIcon>
                 </div>
             </div>

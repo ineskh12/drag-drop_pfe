@@ -3,8 +3,9 @@ import React from "react";
 import _ from "lodash";
 import { Responsive, WidthProvider } from "react-grid-layout";
 import Droppable from "./Droppable";
-import { Button } from '@material-ui/core';
 
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 
@@ -98,11 +99,11 @@ export default class ShowcaseLayout extends React.Component {
         items: this.state.items.concat({
           i: "n" + this.state.newCounter,
           x: (this.state.items.length * 2) % (this.state.cols || 12),
-          y: 0, // puts it at the bottom
+          y: 0, 
           w: 2,
           h: 2
         }),
-        // Increment the counter to ensure key is always unique.
+       
         newCounter: this.state.newCounter + 1
       });
 
@@ -111,10 +112,10 @@ export default class ShowcaseLayout extends React.Component {
     }
 
 
-    console.log('ines : ' + JSON.stringify(this.state.items));
+  
   }
 
-  // We're using the cols coming back from this to calculate where to add new items.
+  
   onBreakpointChange(breakpoint, cols, rows) {
     this.setState({
       breakpoint: breakpoint,
@@ -132,19 +133,21 @@ export default class ShowcaseLayout extends React.Component {
 
 
   onRemoveItem(i) {
-    console.log("removing", i);
+    
     this.setState({ items: _.reject(this.state.items, { i: i }), newCounter: i });
   }
 
 
   render() {
 
-    //console.log('ines app : '+ JSON.stringify(this.state.items) );
+    
     return (
       <div >
-        <Button onClick={this.onAddItem} variant="contained" color="primary">
-          Add item
-</Button>
+    
+<Fab size="small" color="secondary" aria-label="add"  >
+<AddIcon onClick={this.onAddItem}  />
+</Fab>
+
         <div >
 
           <br></br>

@@ -5,10 +5,9 @@ import PropTypes from 'prop-types';
 export default class Droppable extends React.Component {
 
     dragstart_handler(id, e) {
-        console.log("dragStart");
+        
        e.dataTransfer.setData("transfer", e.target.id);
-        console.log('SUM : ' + e.target.id);
-        console.log('drag start' + e.dataTransfer.getData("transfer"));
+        
          e.dataTransfer.setData("gridId", id);
     }
 
@@ -42,9 +41,6 @@ export default class Droppable extends React.Component {
             return r;
           };
 
-        console.log('from droppable' + data);
-        //console.log('from droppable' + data2);
-        console.log('drop36' + data[1])
 
 
 
@@ -52,7 +48,7 @@ export default class Droppable extends React.Component {
     }
     allowDrop = (e) => {
         e.preventDefault();
-        console.log('dorpidi' + e.preventDefault());
+       
 
     }
     render() {
