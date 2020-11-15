@@ -3,8 +3,7 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {PostAdd} from "@material-ui/icons";
-//import DragItemOnclick from "../Items/DragItemOnclick";
-//import Draggable from "../Draggable";
+
 const useStyles = makeStyles((theme) => ({
     popover: {
         pointerEvents: 'none',
@@ -16,12 +15,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const MouseOverPopover=() =>{
-   /*  const Item =  {
-        color: '#55',
-        backgroundColor: 'white',
-        borderRadius: '3px',
-        height: '100%'
-      } */
+  
       
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);

@@ -1,50 +1,36 @@
 import React from 'react';
-import clsx from 'clsx';
-import ImageOutlinedIcon from '@material-ui/icons/ImageOutlined';
-import TableChart from '@material-ui/icons/TableChart';
-import CheckBox from '@material-ui/icons/CheckBox';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import TestShow from "./Dnd/TestShow";
-import Typography from '@material-ui/core/Typography';
+import './App.css';
+import Navbar from './Dnd/Components/Navbar';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Home from './Dnd/Pages/Home';
 
-import Divider from '@material-ui/core/Divider';
-
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import CropLandscapeIcon from '@material-ui/icons/CropLandscape';
-import Droppable from './Dnd/Droppable';
-import Draggable from './Dnd/Draggable';
+import { makeStyles } from "@material-ui/core/styles";
+import AddTemplate from './Dnd/Pages/AddTemplate';
+import TemplateView from './Dnd/Pages/TemplateView';
+import EditTemplate from './Dnd/Pages/EditTemplate';
 const drawerWidth = 240;
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
   appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
   appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  
+  
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -54,146 +40,66 @@ const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
     flexShrink: 0,
+    whiteSpace: 'nowrap',
   },
-  drawerPaper: {
+  drawerOpen: {
     width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
-  drawerHeader: {
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
+    },
+  },
+  toolbar: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0, 1),
-    
-    ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
   },
-  contentShift: {
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
+  
 }));
 
-export default function PersistentDrawerLeft() {
+
+
+function App(props) {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
- 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
- 
-  
-
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
+    <>
          
-Créer et exporter des factures en PDF
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
+      <Router>
+      <main className={classes.content}>
+      <div className={classes.toolbar} >
+        
+        <Navbar />
+        <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/template/add"  component={AddTemplate} />
+        <Route exact path="/template/edit/" component={EditTemplate} />
+          <Route exact path="/template/view" component={TemplateView} />
+        </Switch>
         </div>
-        <Divider />
-        <Droppable id="dr1"  color="inherit"
-        aria-label="open drawer"
-        onClick={handleDrawerOpen}
-        edge="start"
-        className={clsx(classes.menuButton, {
-          [classes.hide]: open,
-        })}>
-        <List>
-        
-            <ListItem button >
-              
-              
-              
-                <Draggable />
-            </ListItem>
-        
-        </List> 
-        <Divider />
-        <List>
-          {['checkbox', 'Button'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <CheckBox /> : <CropLandscapeIcon/>}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-        {['Image', 'Tableau'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ?  <ImageOutlinedIcon/> :<TableChart /> }</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        </main>
 
-
-        
-			  
-			  
-			 
-      </List>
-      </Droppable>
-      </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        <div className={classes.drawerHeader} />
-       <div>
-       
-       <TestShow/></div>
-       
-      </main>
-    </div>
+      </Router>
+    </>
   );
 }
+
+
+export default App;
